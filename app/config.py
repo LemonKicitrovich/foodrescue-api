@@ -1,4 +1,5 @@
 import os
+from sqlalchemy.engine import make_url
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -6,19 +7,28 @@ load_dotenv()
 class Config:
     SECRET_KEY = os.getenv("SECRET_KEY", "foodrescue-secret-raihan")
     
-    # Ambil DATABASE_URL dari Environment Variables
-    database_url = os.getenv("DATABASE_URL")
+    # Ambil DATABASE_URL
+    raw_url = os.getenv("DATABASE_URL", "").strip().strip("'\"")
     
-    if database_url and database_url.strip():
-        database_url = database_url.strip()
-        # Normalisasi prefix postgresql
-        if database_url.startswith("postgres://"):
-            database_url = database_url.replace("postgres://", "postgresql+psycopg2://", 1)
-        elif database_url.startswith("postgresql://") and not database_url.startswith("postgresql+psycopg2://"):
-            database_url = database_url.replace("postgresql://", "postgresql+psycopg2://", 1)
-        SQLALCHEMY_DATABASE_URI = database_url
+    # Normalisasi format
+    if raw_url.startswith("postgres://"):
+        raw_url = raw_url.replace("postgres://", "postgresql+psycopg2://", 1)
+    elif raw_url.startswith("postgresql://") and not raw_url.startswith("postgresql+psycopg2://"):
+        raw_url = raw_url.replace("postgresql://", "postgresql+psycopg2://", 1)
+
+    # Validasi apakah URL valid untuk SQLAlchemy
+    is_valid = False
+    if raw_url:
+        try:
+            make_url(raw_url)
+            is_valid = True
+        except Exception:
+            is_valid = False
+            
+    if is_valid:
+        SQLALCHEMY_DATABASE_URI = raw_url
     else:
-        # Gunakan in-memory SQLite (sqlite://) saat startup check agar tidak membuat file/folder di AWS Lambda
-        SQLALCHEMY_DATABASE_URI = "sqlite://"
-        
+        # Fallback in-memory yang 100% valid dan aman
+        SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
+
     SQLALCHEMY_TRACK_MODIFICATIONS = False
