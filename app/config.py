@@ -10,7 +10,11 @@ class Config:
     # Ambil DATABASE_URL
     raw_url = os.getenv("DATABASE_URL", "").strip().strip("'\"")
     
-    # Normalisasi format
+    # Jaga-jaga jika user copas beserta nama variabelnya (misal: DATABASE_URL=postgresql...)
+    if raw_url.startswith("DATABASE_URL="):
+        raw_url = raw_url.replace("DATABASE_URL=", "", 1).strip().strip("'\"")
+        
+    # Normalisasi format driver postgresql
     if raw_url.startswith("postgres://"):
         raw_url = raw_url.replace("postgres://", "postgresql+psycopg2://", 1)
     elif raw_url.startswith("postgresql://") and not raw_url.startswith("postgresql+psycopg2://"):
