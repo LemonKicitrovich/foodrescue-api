@@ -1,0 +1,368 @@
+{
+  "info": {
+    "name": "FoodRescue API - Tugas Akhir Learning Labs",
+    "description": "Postman Collection untuk pengujian REST API FoodRescue oleh Raihan Noviansyah (NIM: 21114012610124)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "0. Cek Status API (Home)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/",
+          "host": ["{{base_url}}"],
+          "path": [""]
+        }
+      }
+    },
+    {
+      "name": "1. Pengguna",
+      "item": [
+        {
+          "name": "GET - Ambil Semua Pengguna",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/pengguna",
+              "host": ["{{base_url}}"],
+              "path": ["pengguna"]
+            }
+          }
+        },
+        {
+          "name": "GET - Detail Pengguna By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/pengguna/1",
+              "host": ["{{base_url}}"],
+              "path": ["pengguna", "1"]
+            }
+          }
+        },
+        {
+          "name": "POST - Tambah Pengguna Baru",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nama\": \"Catering Berkah Jaya\",\n  \"email\": \"kontak@cateringberkah.com\",\n  \"nomor_hp\": \"081299881122\",\n  \"alamat\": \"Jl. Fatmawati No. 50, Jakarta Selatan\",\n  \"peran\": \"donatur\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/pengguna",
+              "host": ["{{base_url}}"],
+              "path": ["pengguna"]
+            }
+          }
+        },
+        {
+          "name": "PUT - Update Profil Pengguna",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nomor_hp\": \"081299889988\",\n  \"alamat\": \"Jl. Fatmawati No. 88, Jakarta Selatan\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/pengguna/1",
+              "host": ["{{base_url}}"],
+              "path": ["pengguna", "1"]
+            }
+          }
+        },
+        {
+          "name": "DELETE - Hapus Pengguna",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/pengguna/7",
+              "host": ["{{base_url}}"],
+              "path": ["pengguna", "7"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Donasi (CRUD Utama)",
+      "item": [
+        {
+          "name": "GET - Ambil Semua Donasi",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/donasi",
+              "host": ["{{base_url}}"],
+              "path": ["donasi"]
+            }
+          }
+        },
+        {
+          "name": "GET - Filter Donasi (Status Tersedia)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/donasi?status=tersedia",
+              "host": ["{{base_url}}"],
+              "path": ["donasi"],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "tersedia"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET - Detail Donasi By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/donasi/1",
+              "host": ["{{base_url}}"],
+              "path": ["donasi", "1"]
+            }
+          }
+        },
+        {
+          "name": "POST - Buat Donasi Makanan Baru",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id_donatur\": 1,\n  \"nama_makanan\": \"Nasi Box Ayam Bakar & Lalapan\",\n  \"jumlah\": 30,\n  \"lokasi_pengambilan\": \"Restoran Padang Minang Saiyo, Jl. Merdeka 45\",\n  \"tanggal_kadaluarsa\": \"2026-11-01\",\n  \"status\": \"tersedia\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/donasi",
+              "host": ["{{base_url}}"],
+              "path": ["donasi"]
+            }
+          }
+        },
+        {
+          "name": "PUT - Update Donasi / Status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jumlah\": 35,\n  \"status\": \"tersedia\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/donasi/1",
+              "host": ["{{base_url}}"],
+              "path": ["donasi", "1"]
+            }
+          }
+        },
+        {
+          "name": "DELETE - Hapus Donasi",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/donasi/2",
+              "host": ["{{base_url}}"],
+              "path": ["donasi", "2"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Pemeriksaan Makanan",
+      "item": [
+        {
+          "name": "GET - Ambil Riwayat Pemeriksaan",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/pemeriksaan",
+              "host": ["{{base_url}}"],
+              "path": ["pemeriksaan"]
+            }
+          }
+        },
+        {
+          "name": "POST - Input Pemeriksaan Makanan (Quality Check)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id_donasi\": 3,\n  \"id_pemeriksa\": 5,\n  \"kondisi\": \"layak\",\n  \"catatan\": \"Kemasan tersegel aman, suhu makanan terjaga, layak konsumsi.\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/pemeriksaan",
+              "host": ["{{base_url}}"],
+              "path": ["pemeriksaan"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Pengantaran",
+      "item": [
+        {
+          "name": "GET - Ambil Daftar Pengantaran",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/pengantaran",
+              "host": ["{{base_url}}"],
+              "path": ["pengantaran"]
+            }
+          }
+        },
+        {
+          "name": "POST - Buat Pesanan Pengantaran Donasi",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id_donasi\": 1,\n  \"id_penerima\": 3,\n  \"id_relawan\": 5\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/pengantaran",
+              "host": ["{{base_url}}"],
+              "path": ["pengantaran"]
+            }
+          }
+        },
+        {
+          "name": "PUT - Update Status Pengantaran",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status_pengantaran\": \"selesai\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/pengantaran/1",
+              "host": ["{{base_url}}"],
+              "path": ["pengantaran", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Laporan Masalah",
+      "item": [
+        {
+          "name": "GET - Ambil Daftar Laporan Masalah",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/laporan",
+              "host": ["{{base_url}}"],
+              "path": ["laporan"]
+            }
+          }
+        },
+        {
+          "name": "POST - Buat Laporan Masalah",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id_donasi\": 1,\n  \"id_pelapor\": 3,\n  \"isi_laporan\": \"Jumlah makanan yang diterima kurang 2 porsi dari info awal.\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/laporan",
+              "host": ["{{base_url}}"],
+              "path": ["laporan"]
+            }
+          }
+        },
+        {
+          "name": "PUT - Update Penanganan Laporan (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status_laporan\": \"selesai\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/laporan/1",
+              "host": ["{{base_url}}"],
+              "path": ["laporan", "1"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
