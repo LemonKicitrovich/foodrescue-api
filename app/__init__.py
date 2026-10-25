@@ -1,12 +1,9 @@
-import os
-import tempfile
 from flask import Flask, jsonify
 from app.config import Config
 from app.extensions import db
 
 def create_app():
-    # Gunakan folder temp yang writable di Vercel/AWS Lambda
-    app = Flask(__name__, instance_path=tempfile.gettempdir())
+    app = Flask(__name__)
     app.config.from_object(Config)
 
     # Inisialisasi Database
