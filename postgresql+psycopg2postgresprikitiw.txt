@@ -1,1 +1,0 @@
-postgresql+psycopg2://postgres:prikitiw123@db.lulzynmmmfbevyfqsnku.supabase.co:5432/postgres
